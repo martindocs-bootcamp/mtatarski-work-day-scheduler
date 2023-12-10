@@ -3,37 +3,36 @@ $(document).ready(function() {
   if(!getLocalStorage) {
     localStorage.setItem('workSchedule', JSON.stringify([]));
   }
-  if(!getLocalStorage) getLocalStorage = [];
-  
+  if(!getLocalStorage) getLocalStorage = [];  
   // console.log(getLocalStorage);
 
-   // Current day
-  // const currentDay = dayjs();
-  const workDay = dayjs().format('dddd, MMMM DD')
+  // Current date  
+  const currentDate = dayjs().format('dddd, MMMM DD')
 
   // Display current day
-  $('#currentDay').text(workDay);
+  $('#currentDay').text(currentDate);
 
-  // Color coded timeblocks
-  const currentHour = Number(dayjs().format('H'));
-  // console.log(dayjs().daysInMonth());
-
-  // Days of the month
+  // All days in the month
   const daysInTheMonth = dayjs().daysInMonth();
-  const dayOfTheMonth = Number(dayjs().format('D'));
 
-  const arr = Array.from({length: daysInTheMonth}, (_, i)=> i + 1);
+  // Current day in the month
+  const currentDayOfTheMonth = Number(dayjs().format('D'));
+
+  // Create an array of days in the month
+  const getAllDaysInMonth = Array.from({length: daysInTheMonth}, (_, i)=> i + 1);
   const ul = $('#nav');
-  ul.attr('data-day', dayOfTheMonth);
+  ul.attr('data-day', currentDayOfTheMonth);
   
-  arr.forEach((day)=>{
+  // Create tab for each day of the month
+  getAllDaysInMonth.forEach((day)=>{
     const li = $('<li>');
     li.addClass('nav-item');
     
     const a = $('<button>')
     a.addClass('nav-link');
-
-    if(day === dayOfTheMonth){
+    
+    // Set active tab to current day 
+    if(day === currentDayOfTheMonth){
       a.addClass('active');
       a.attr('aria-current', 'page');      
     }
@@ -44,43 +43,39 @@ $(document).ready(function() {
     ul.append(li);    
   })
 
-
+  // Set color coded timeblocks for each day
+  const currentHour = Number(dayjs().format('H'));
   $('.hour').each(function () {
     const hour = Number($(this).attr('data-hour'));
-    // const dataText = $(this).next().find('textarea').val();
    
     if(hour === currentHour) {
       $(this).parent().addClass('present');
     }else if(hour > currentHour){
-      $(this).parent().addClass('future');
-      // $('textarea').attr('disabled', false);      
+      $(this).parent().addClass('future');     
     }else{
-      $(this).parent().addClass('past');
-      // $('textarea').attr('disabled', true);
+      $(this).parent().addClass('past');      
     }
   })
 
-
-  let findCurrentSchedule = getLocalStorage.find((data) => data.date === dayjs().format('dddd, MMMM DD'));
-
-  // Populate with data for current work schedule  
+  // Find data for the current Work Schedule
+  let findCurrentSchedule = getLocalStorage.find((data) => data.date === currentDate);
+ 
+  // Display data for current date work schedule  
   if(findCurrentSchedule){   
-    // console.log(findCurrentSchedule.data[9]);
     $('.hour').each(function(){
       const hour = $(this).attr('data-hour');
       const dataText = $(this).next().find('textarea');
 
-      dataText.text(findCurrentSchedule.data[hour]); 
+      dataText.val(findCurrentSchedule.data[hour]); 
     })
   }
 
-
-  // Change the date
+  // Switch between tabs 
   $('#nav').on('click', '.nav-item' ,function(){
-
-    // Change the tab day 
-    const day = $(this).children();   
    
+    // Current tab 
+    const day = $(this).children();      
+  
     // Remove previous active tab
     const links = $('.nav-link');
     for(let i = 0; i < links.length; i++){
@@ -99,33 +94,28 @@ $(document).ready(function() {
 
     // Set new date
     const newDate = dayjs().set('date', day.text()).format('dddd, MMMM DD');  
-    
-        // Find data based of new date
-    let searchSchedule = getLocalStorage.find((data) => data.date === newDate);
- 
-
-    if(!searchSchedule) {
-      $('.hour').each(function(){
-        const dataText = $(this).next().find('textarea');         
-        dataText.text(''); 
-      })
-    }else{
-      $('.hour').each(function(){
-        const hour = $(this).attr('data-hour');
-        const dataText = $(this).next().find('textarea');
+   
+    // Find data based of new date
+    let searchNewSchedule = getLocalStorage.find((data) => data.date === newDate);
   
-        dataText.text(searchSchedule.data[hour]); 
-      })
-    }
-
-  })  
-
-
+    // Display data for new date work schedule
+    $('.hour').each(function(){
+      if(!searchNewSchedule){        
+        const dataText = $(this).next().find('textarea');   
+        dataText.val('');                           
+      }else{
+        const hour = $(this).attr('data-hour');
+        const dataText = $(this).next().find('textarea');      
+        dataText.val(searchNewSchedule.data[hour]); 
+      }
+    });
+  });  
 
 
   // Save to local storage
   $('#save').on('click', 'button' , function() {    
     
+    // Get the day of active tab
     const links = $('.nav-link');
     let day = '';
     for(let i = 0; i < links.length; i++){
@@ -137,42 +127,46 @@ $(document).ready(function() {
       }
     }
 
-    // Set new date
-    const newDate = dayjs().set('date', day).format('dddd, MMMM DD');  
+    // Set new date based on active tab
+    const activeTabDate = dayjs().set('date', day).format('dddd, MMMM DD');  
 
-    let findCurrentSchedule = getLocalStorage.find((data) => data.date === newDate);
-   
+    // Find data for the current tab Work Schedule
+    let findActiveTabData = getLocalStorage.find((data) => data.date === activeTabDate);   
 
-    if(!findCurrentSchedule){
-      const saveTodayWorkSchedule = {
-        date: newDate,
+    // Crate data if not found
+    if(!findActiveTabData){
+      const saveTabWorkSchedule = {
+        date: activeTabDate,
         data: {}
       };
 
       let hour = 9;
 
+      // Append data based on active tab 
       $('.text-data').each(function(){
         const textEntry = $(this).val();
-        saveTodayWorkSchedule.data[hour] = textEntry;
+        saveTabWorkSchedule.data[hour] = textEntry;
         hour++;
       });
 
-      getLocalStorage.push(saveTodayWorkSchedule);  
+      // Save to local storage
+      getLocalStorage.push(saveTabWorkSchedule);  
       localStorage.setItem('workSchedule', JSON.stringify(getLocalStorage));
 
-    }else{     
+    }else{    
+      
+      // Othervise update existing data
       let hour = 9;
 
       $('.text-data').each(function(){
         const textEntry = $(this).val();
-        findCurrentSchedule.data[hour] = textEntry;
+        findActiveTabData.data[hour] = textEntry;
         hour++;
       });
 
+      // Save to local storage
       localStorage.setItem('workSchedule', JSON.stringify(getLocalStorage));
     }    
+  });  
 
-  });
-
-  
 });
