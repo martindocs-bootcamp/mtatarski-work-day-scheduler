@@ -25,6 +25,29 @@ header {
   padding: 60px 60px 0;
 }
 
+.today-day {
+  font-weight: 700;
+}
+
+.days-month {
+  font-size: 15px;
+  margin-top: 40px;
+}
+
+.nav {
+  margin: 8px 0 5px;
+  --bs-nav-link-color: #858585;
+  --bs-nav-link-hover-color: #313131;
+}
+
+.nav-link {
+  padding-bottom: 3px; 
+}
+
+.nav-underline .nav-link.active {
+  color: #313131;
+}
+
 .description {
   white-space: pre-wrap;
 }
@@ -35,7 +58,6 @@ header {
 }
 
 .row {
-  /* white-space: pre-wrap; */
   height: 80px;
   border-top: 1px solid white;
 }
@@ -65,6 +87,9 @@ header {
   color: white;
 }
 
+.btn {
+  border-radius: 0;
+}
 .saveBtn {
   border-left: 1px solid black;
   border-top-right-radius: 15px;
@@ -75,11 +100,17 @@ header {
   width: 100%;
 }
 
-.saveBtn i:hover {
-  font-size: 20px;
+.saveBtn:hover {
+  font-size: 22px;
   transition: all 0.3s ease-in-out;
 }
 
-.fa, .far, .fas {
+.far {
   scale: 2;
+}
+
+.msg {
+  padding-top: 5px; 
+  margin-bottom: 10px;
+  font-size: 14px;
 }
