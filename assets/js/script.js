@@ -115,6 +115,13 @@ $(document).ready(function() {
   // Save to local storage
   $('#save').on('click', 'button' , function() {    
     
+    const textarea = $(this).closest('.row').find('textarea').val();
+
+    if(!textarea){
+      displayMessage('Please enter a text value');
+      return;
+    }
+    
     // Get the day of active tab
     const links = $('.nav-link');
     let day = '';
