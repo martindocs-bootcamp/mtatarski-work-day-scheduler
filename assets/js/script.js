@@ -115,10 +115,27 @@ $(document).ready(function() {
   // Save to local storage
   $('#save').on('click', 'button' , function() {    
     
+    const saveButtons = $('.saveBtn');
+    
+    try{
+      // Disable the save buttons when user click save to preven from multiple clicks
+      saveButtons.each(function() {
+        $(this).attr('disabled', true);
+      })      
+    }catch(err){
+      console.log('Error saving data to local storage:', err)
+    }finally{
+      // Re-enable the button after a delay
+      setTimeout(function() {
+        saveButtons.attr('disabled', false);
+      }, 2000);
+    }
+
     const textarea = $(this).closest('.row').find('textarea').val();
 
+    // Prevent from saving to local storage if textarea is empty
     if(!textarea){
-      displayMessage('✗ Please enter a text value', 'red');
+      displayMessage('✗ Text area cannot be empty', 'red');
       return;
     }
     
