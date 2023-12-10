@@ -152,6 +152,7 @@ $(document).ready(function() {
       // Save to local storage
       getLocalStorage.push(saveTabWorkSchedule);  
       localStorage.setItem('workSchedule', JSON.stringify(getLocalStorage));
+      displayMessage('Appointment Added to local storage ✔ ');
 
     }else{    
       
@@ -166,7 +167,22 @@ $(document).ready(function() {
 
       // Save to local storage
       localStorage.setItem('workSchedule', JSON.stringify(getLocalStorage));
+      displayMessage('Appointments Added to local storage ✔ ');
     }    
   });  
+
+
+  const displayMessage = function(msg){
+        
+    const p = $('<p>');
+    p.text(msg);
+
+    // append as first child in the container
+    $('#save').prepend(p); 
+
+    setTimeout(function(){
+      p.remove();
+    }, 1000);
+  }
 
 });
