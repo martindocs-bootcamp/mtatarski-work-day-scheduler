@@ -36,7 +36,7 @@ header {
 
 .nav {
   margin: 8px 0 5px;
-  --bs-nav-link-color: #858585;
+  --bs-nav-link-color: #858585;  
   --bs-nav-link-hover-color: #313131;
 }
 
