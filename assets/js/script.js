@@ -28,18 +28,18 @@ $(document).ready(function() {
     const li = $('<li>');
     li.addClass('nav-item');
     
-    const a = $('<button>')
-    a.addClass('nav-link');
+    const button = $('<button>')
+    button.addClass('nav-link');
     
     // Set active tab to current day 
     if(day === currentDayOfTheMonth){
-      a.addClass('active');
-      a.attr('aria-current', 'page');      
+      button.addClass('active');
+      button.attr('aria-current', 'page');      
     }
 
-    a.text(day);
+    button.text(day);
 
-    li.append(a);
+    li.append(button);
     ul.append(li);    
   })
 
@@ -118,7 +118,7 @@ $(document).ready(function() {
     const textarea = $(this).closest('.row').find('textarea').val();
 
     if(!textarea){
-      displayMessage('Please enter a text value');
+      displayMessage('✗ Please enter a text value', 'red');
       return;
     }
     
@@ -159,7 +159,7 @@ $(document).ready(function() {
       // Save to local storage
       getLocalStorage.push(saveTabWorkSchedule);  
       localStorage.setItem('workSchedule', JSON.stringify(getLocalStorage));
-      displayMessage('Appointment Added to local storage ✔ ');
+      displayMessage('✔ Appointment Added to localStorage', 'green');
 
     }else{    
       
@@ -174,22 +174,24 @@ $(document).ready(function() {
 
       // Save to local storage
       localStorage.setItem('workSchedule', JSON.stringify(getLocalStorage));
-      displayMessage('Appointments Added to local storage ✔ ');
+      displayMessage('✔ Appointments Added to localStorage', 'green');
     }    
   });  
 
 
-  const displayMessage = function(msg){
+  const displayMessage = function(msg, color){
         
     const p = $('<p>');
+    p.addClass('msg')
     p.text(msg);
+    p.css('color', color);
 
     // append as first child in the container
     $('#save').prepend(p); 
 
     setTimeout(function(){
       p.remove();
-    }, 1000);
+    }, 2000);
   }
 
 });
