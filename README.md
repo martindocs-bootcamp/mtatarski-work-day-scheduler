@@ -44,7 +44,7 @@ Work Day Scheduler is a simple yet effective calendar application designed to he
 
 - **Month Navigation:** Allow users to switch between months, giving them the ability to view and save data for different months.
 
-- **Bulk Data Management:** Provide users with the ability to remove data for a particular day, week, or individual entries.
+- **Bulk Data Management:** Provide users with the ability to remove data for a particular day, week.
 
 ## Credits
 
