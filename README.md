@@ -17,17 +17,19 @@ Work Day Scheduler is a simple yet effective calendar application designed to he
 
 - **Timeblock Organization:** Timeblocks for standard business hours are presented as the user scrolls down the planner.
 
-- **Color-coded Timeblocks:** Each timeblock is color-coded to indicate whether it is in the past, present, or future, providing visual clarity.
-
 - **Event Entry:** Users can enter events by clicking on a specific timeblock.
 
-- **Local Storage:** Events are saved to local storage when the save button within a timeblock is clicked, ensuring persistence between page refreshes.
+- **Content Clearing Capability:** Users have the ability to individually clear the content for each entry.
 
 - **Days of the Month Tabs:** The app displays tabs for each day of the month, allowing users to switch between days and save tasks/appointments for different days.
 
+- **Color-coded Timeblocks:** Each timeblock is color-coded to indicate whether it is in the past, present, or future, providing visual clarity.
+
+- **Local Storage:** Events are saved to local storage when the save button within a timeblock is clicked, ensuring persistence between page refreshes.
+
 - **Button Disablement:** When the user clicks the save button, all buttons are disabled temporarily to prevent multiple clicks.
 
-- **Popup for Empty Textarea:** If the user tries to save notes without entering any text, a popup will prompt them to fill the textarea before saving.
+- **Popup for Empty Entry:** If the user tries to save notes without entering any text, a popup will prompt them to fill the content before saving.
 
 - **Popup for Successful Save:** After successfully saving an appointment, a popup notifies the user that the appointment has been saved.
 
