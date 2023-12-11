@@ -10,8 +10,10 @@ $(document).ready(function() {
   // whether it was retrieved from localStorage or created as new
   if(!getLocalStorage) getLocalStorage = [];  
  
+  dayjs.extend(window.dayjs_plugin_advancedFormat);
+
   // Current date  
-  const currentDate = dayjs().format('dddd, MMMM DD')
+  const currentDate = dayjs().format('dddd, MMMM Do')
 
   // Display current day to the screen
   $('#currentDay').text(currentDate);
