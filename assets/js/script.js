@@ -10,6 +10,7 @@ $(document).ready(function() {
   // whether it was retrieved from localStorage or created as new
   if(!getLocalStorage) getLocalStorage = [];  
  
+  // Extends dayjs() API to display Day of Month with ordinal suffix
   dayjs.extend(window.dayjs_plugin_advancedFormat);
 
   // Current date  
@@ -141,7 +142,7 @@ $(document).ready(function() {
     day.addClass('active');
 
     // Set new date
-    const newDate = dayjs().set('date', day.text()).format('dddd, MMMM DD');  
+    const newDate = dayjs().set('date', day.text()).format('dddd, MMMM Do');  
     
     // Find data in the localStorage based of new date
     let searchNewSchedule = getLocalStorage.find((data) => data.date === newDate);
@@ -215,7 +216,7 @@ $(document).ready(function() {
     }
 
     // Set new date based on active tab
-    const activeTabDate = dayjs().set('date', day).format('dddd, MMMM DD');  
+    const activeTabDate = dayjs().set('date', day).format('dddd, MMMM Do');  
 
     // Find data in localStorage for the current based of new date
     let findActiveTabData = getLocalStorage.find((data) => data.date === activeTabDate); 
@@ -300,7 +301,7 @@ $(document).ready(function() {
       }
 
       // Set new date based on active tab
-      const activeTabDate = dayjs().set('date', day).format('dddd, MMMM DD');  
+      const activeTabDate = dayjs().set('date', day).format('dddd, MMMM Do');  
 
       // Find data in localStorage for the current based of new date
       let findActiveTabData = getLocalStorage.find((data) => data.date === activeTabDate); 
